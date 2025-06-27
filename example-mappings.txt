@@ -1,0 +1,715 @@
+# 30-Bit Military Command Schema Examples
+
+This document provides comprehensive examples of how the 30-bit command schema can be used to encode various military and operational commands. Each example shows both natural language inputs and their corresponding schema mappings.
+
+## Schema Overview
+
+The schema uses 30 bits divided across:
+- Action (6 bits): 64 possible actions
+- Target (6 bits): 64 possible targets
+- When (13 bits): 
+  - Hour (5 bits): 0-23
+  - Minute (6 bits): 0-59
+  - Modifier (2 bits): exact/before/after/approximate
+- Where (4 bits): 16 sectors (alpha through papa)
+- Flags (3 bits): 8 possible states
+
+## Emergency & Distress Examples
+
+### Compromise & Extraction
+Natural: "Position compromised, need immediate extraction!"
+```
+Action: "alert" (2)
+Target: "force" (26)
+When: [current time], "exact"
+Where: [current sector]
+Flags: "critical" (3)
+```
+
+Natural: "Under heavy fire, requesting immediate backup!"
+```
+Action: "broadcast" (6)
+Target: "personnel" (43)
+When: [current time], "exact"
+Where: [current sector]
+Flags: "critical" (3)
+```
+
+### Medical & Casualty
+Natural: "Man down, need medic at checkpoint bravo!"
+```
+Action: "request" (56)
+Target: "personnel" (43)
+When: [current time], "exact"
+Where: "bravo sector" (1)
+Flags: "critical" (3)
+```
+
+## Stealth Operations
+
+### Covert Infiltration
+Natural: "Quietly enter compound through north entrance around midnight"
+```
+Action: "infiltrate" (40)
+Target: "compound" (16)
+When: 00:00, "approximate"
+Where: [specified sector]
+Flags: "stealth" (1)
+```
+
+### Surveillance
+Natural: "Keep eyes on the target, don't blow your cover"
+```
+Action: "surveil" (61)
+Target: "target" (57)
+When: [current time], "after"
+Where: [specified sector]
+Flags: "stealth" (1)
+```
+
+## Cyber & Electronic Warfare
+
+### System Breach
+Natural: "Get into their mainframe when the power goes down"
+```
+Action: "hack" (37)
+Target: "system" (56)
+When: [specified time], "exact"
+Where: [specified sector]
+Flags: "electronic_silence" (6)
+```
+
+### Communications Disruption
+Natural: "Cut off their comms before the main assault"
+```
+Action: "jam" (42)
+Target: "communications" (15)
+When: [specified time], "before"
+Where: [specified sector]
+Flags: "standard" (0)
+```
+
+## Asset Protection
+
+### VIP Security
+Natural: "Get the ambassador to the safe zone, highest priority"
+```
+Action: "move" (46)
+Target: "vip" (63)
+When: [current time], "after"
+Where: [specified sector]
+Flags: "critical" (3)
+```
+
+### Facility Defense
+Natural: "Lock down the base, possible breach detected"
+```
+Action: "secure" (58)
+Target: "base" (6)
+When: [current time], "exact"
+Where: [specified sector]
+Flags: "high_risk" (2)
+```
+
+## Intelligence Operations
+
+### Reconnaissance
+Natural: "Scout the area before dawn, report any movement"
+```
+Action: "reconnoiter" (52)
+Target: "zone" (62)
+When: 05:00, "before"
+Where: [specified sector]
+Flags: "stealth" (1)
+```
+
+### Data Collection
+Natural: "Download all files from the target system by 0300"
+```
+Action: "collect" (10)
+Target: "data" (19)
+When: 03:00, "before"
+Where: [specified sector]
+Flags: "electronic_silence" (6)
+```
+
+## Combat Operations
+
+### Strike Missions
+Natural: "Hit the enemy convoy when it reaches the checkpoint"
+```
+Action: "strike" (60)
+Target: "convoy" (17)
+When: [specified time], "exact"
+Where: [specified sector]
+Flags: "high_risk" (2)
+```
+
+### Defense
+Natural: "Hold the bridge at all costs, reinforcements coming"
+```
+Action: "defend" (19)
+Target: "bridge" (8)
+When: [current time], "after"
+Where: [specified sector]
+Flags: "critical" (3)
+```
+
+## Rescue Operations
+
+### Hostage Rescue
+Natural: "Get the hostages out before they move them, civilian area"
+```
+Action: "rescue" (57)
+Target: "hostage" (33)
+When: [specified time], "before"
+Where: [specified sector]
+Flags: "civilian_presence" (5)
+```
+
+### Personnel Recovery
+Natural: "Extract the undercover team, weather's getting bad"
+```
+Action: "extract" (33)
+Target: "personnel" (43)
+When: [specified time], "exact"
+Where: [specified sector]
+Flags: "weather_dependent" (4)
+```
+
+## Support Operations
+
+### Supply Missions
+Natural: "Deliver ammunition to forward base before sunrise"
+```
+Action: "deliver" (21)
+Target: "ammunition" (3)
+When: 05:00, "before"
+Where: [specified sector]
+Flags: "standard" (0)
+```
+
+### Maintenance
+Natural: "Fix the radar system, storm approaching"
+```
+Action: "repair" (55)
+Target: "radar" (47)
+When: [current time], "before"
+Where: [specified sector]
+Flags: "weather_dependent" (4)
+```
+
+## Complex Combined Operations
+
+### Multi-Phase Operation
+Natural: "Infiltrate compound, secure intel, extract before dawn"
+```
+Phase 1:
+Action: "infiltrate" (40)
+Target: "compound" (16)
+When: [time 1], "exact"
+Where: [sector]
+Flags: "stealth" (1)
+
+Phase 2:
+Action: "secure" (58)
+Target: "intelligence" (35)
+When: [time 2], "before"
+Where: [sector]
+Flags: "stealth" (1)
+
+Phase 3:
+Action: "extract" (33)
+Target: "personnel" (43)
+When: 05:00, "before"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+### Coordinated Strike
+Natural: "Jam communications, breach perimeter, seize objective"
+```
+Phase 1:
+Action: "jam" (42)
+Target: "communications" (15)
+When: [time 1], "exact"
+Where: [sector]
+Flags: "electronic_silence" (6)
+
+Phase 2:
+Action: "breach" (5)
+Target: "perimeter" (42)
+When: [time 2], "exact"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Phase 3:
+Action: "seize" (59)
+Target: "objective" (39)
+When: [time 3], "exact"
+Where: [sector]
+Flags: "critical" (3)
+```
+
+## Special Conditions
+
+### Weather-Dependent Operations
+Natural: "Launch aircraft when weather clears"
+```
+Action: "deploy" (22)
+Target: "aircraft" (2)
+When: [specified time], "after"
+Where: [specified sector]
+Flags: "weather_dependent" (4)
+```
+
+### Civilian Considerations
+Natural: "Clear the building, watch for civilians"
+```
+Action: "clear" (9)
+Target: "facility" (24)
+When: [current time], "after"
+Where: [specified sector]
+Flags: "civilian_presence" (5)
+```
+
+### Abort Conditions
+Natural: "Extract team if compromised, mission is scrubbed"
+```
+Action: "extract" (33)
+Target: "personnel" (43)
+When: [current time], "after"
+Where: [specified sector]
+Flags: "abort_conditions" (7)
+```
+
+## Realistic Single-Phase Commands
+
+### Time-Specific Combat
+Natural: "Hit the convoy when it passes checkpoint at 0445, no survivors"
+```
+Action: "strike" (60)
+Target: "convoy" (17)
+When: 04:45, "exact"
+Where: [sector]
+Flags: "high_risk" (2)
+```
+
+### Urgent Response
+Natural: "Need eyes on the embassy entrance in 10 minutes, something's up"
+```
+Action: "surveil" (61)
+Target: "facility" (24)
+When: [current time + 10], "exact"
+Where: [sector]
+Flags: "critical" (3)
+```
+
+### Stealth Entry
+Natural: "Get our guy inside before the guard rotation at 0300"
+```
+Action: "infiltrate" (40)
+Target: "facility" (24)
+When: 03:00, "before"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+### Weather-Dependent
+Natural: "Once the storm hits at 2100, take out their power grid"
+```
+Action: "neutralize" (47)
+Target: "power source" (45)
+When: 21:00, "after"
+Where: [sector]
+Flags: "weather_dependent" (4)
+```
+
+### Civilian Area
+Natural: "Clear that market square by 0800, lots of civilians around"
+```
+Action: "clear" (9)
+Target: "zone" (62)
+When: 08:00, "before"
+Where: [sector]
+Flags: "civilian_presence" (5)
+```
+
+### Electronic Warfare
+Natural: "Kill their comms exactly at 0230 when their systems update"
+```
+Action: "jam" (42)
+Target: "communications" (15)
+When: 02:30, "exact"
+Where: [sector]
+Flags: "electronic_silence" (6)
+```
+
+### Asset Protection
+Natural: "Get the package to the safe house before sunrise"
+```
+Action: "deliver" (21)
+Target: "package" (40)
+When: 05:00, "before"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+### Intel Gathering
+Natural: "Watch the north entrance until shift change at 1800"
+```
+Action: "monitor" (45)
+Target: "access point" (0)
+When: 18:00, "before"
+Where: [sector]
+Flags: "standard" (0)
+```
+
+### Emergency Response
+Natural: "Main gate's been breached! Lock down the facility now!"
+```
+Action: "secure" (58)
+Target: "facility" (24)
+When: [current time], "exact"
+Where: [sector]
+Flags: "critical" (3)
+```
+
+### Covert Extraction
+Natural: "Get our agent out when the guards change at 2345"
+```
+Action: "extract" (33)
+Target: "agent" (1)
+When: 23:45, "exact"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+### Supply Run
+Natural: "Fuel truck needs to reach alpha sector before their generators die at 1630"
+```
+Action: "deliver" (21)
+Target: "fuel" (28)
+When: 16:30, "before"
+Where: "alpha sector" (0)
+Flags: "critical" (3)
+```
+
+### Defensive Position
+Natural: "Hold the bridge until reinforcements arrive at 0515"
+```
+Action: "defend" (19)
+Target: "bridge" (8)
+When: 05:15, "before"
+Where: [sector]
+Flags: "high_risk" (2)
+```
+
+## Advanced Operation Patterns
+
+### Chain Reaction Operations
+Natural: "When their radar goes down, jam comms then strike the command center"
+```
+Trigger Event:
+Action: "detect" (24)
+Target: "radar" (47)
+When: [specified time], "exact"
+Where: [sector]
+Flags: "standard" (0)
+
+Response 1:
+Action: "jam" (42)
+Target: "communications" (15)
+When: [trigger time], "after"
+Where: [sector]
+Flags: "electronic_silence" (6)
+
+Response 2:
+Action: "strike" (60)
+Target: "command center" (14)
+When: [jam time], "after"
+Where: [sector]
+Flags: "critical" (3)
+```
+
+### Synchronized Multi-Zone Operations
+Natural: "Simultaneously neutralize power in all sectors at 0200 sharp"
+```
+For each sector (0-15):
+Action: "neutralize" (47)
+Target: "power source" (45)
+When: 02:00, "exact"
+Where: [current sector]
+Flags: "electronic_silence" (6)
+```
+
+### Conditional Branching Operations
+Natural: "Monitor checkpoint. If enemy spotted, engage. If civilians present, hold position."
+```
+Primary:
+Action: "monitor" (45)
+Target: "checkpoint" (11)
+When: [current time], "after"
+Where: [sector]
+Flags: "standard" (0)
+
+Condition 1 (Enemy):
+Action: "engage" (28)
+Target: "enemy" (23)
+When: [trigger time], "after"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Condition 2 (Civilian):
+Action: "hold" (38)
+Target: "position" (44)
+When: [trigger time], "after"
+Where: [sector]
+Flags: "civilian_presence" (5)
+```
+
+## Advanced Combat Scenarios
+
+### Coordinated Air-Ground Operation
+Natural: "Air support eliminate radar while ground team breaches the perimeter"
+```
+Air Component:
+Action: "eliminate" (26)
+Target: "radar" (47)
+When: [time], "exact"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Ground Component:
+Action: "breach" (5)
+Target: "perimeter" (42)
+When: [same time], "exact"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+### Resource Denial Operation
+Natural: "Cut their supply lines, destroy fuel reserves, block reinforcement routes"
+```
+Phase 1:
+Action: "neutralize" (47)
+Target: "supplies" (55)
+When: [time 1], "exact"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Phase 2:
+Action: "destroy" (23)
+Target: "fuel" (28)
+When: [time 2], "after"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Phase 3:
+Action: "secure" (58)
+Target: "route" (50)
+When: [time 3], "after"
+Where: [sector]
+Flags: "critical" (3)
+```
+
+## Sophisticated Intel Operations
+
+### Counter-Intelligence
+Natural: "Plant false data, monitor access, identify infiltrators"
+```
+Phase 1:
+Action: "deliver" (21)
+Target: "data" (19)
+When: [time 1], "exact"
+Where: [sector]
+Flags: "stealth" (1)
+
+Phase 2:
+Action: "monitor" (45)
+Target: "access point" (0)
+When: [time 2], "after"
+Where: [sector]
+Flags: "electronic_silence" (6)
+
+Phase 3:
+Action: "hunt" (39)
+Target: "agent" (1)
+When: [time 3], "after"
+Where: [sector]
+Flags: "high_risk" (2)
+```
+
+### Deep Cover Operation
+Natural: "Agent to infiltrate facility, gather intel for 48 hours, maintain cover at all costs"
+```
+Phase 1:
+Action: "infiltrate" (40)
+Target: "facility" (24)
+When: [start time], "exact"
+Where: [sector]
+Flags: "stealth" (1)
+
+Phase 2:
+Action: "collect" (10)
+Target: "intelligence" (35)
+When: [during period], "after"
+Where: [sector]
+Flags: "stealth" (1)
+
+Contingency:
+Action: "terminate" (62)
+Target: "operation" (39)
+When: [if compromised], "exact"
+Where: [sector]
+Flags: "abort_conditions" (7)
+```
+
+## Complex Asset Management
+
+### Resource Reallocation
+Natural: "Redistribute supplies from alpha to charlie, maintain stealth, avoid civilian routes"
+```
+Phase 1:
+Action: "collect" (10)
+Target: "supplies" (55)
+When: [time 1], "exact"
+Where: "alpha sector" (0)
+Flags: "stealth" (1)
+
+Phase 2:
+Action: "move" (46)
+Target: "supplies" (55)
+When: [time 2], "after"
+Where: [transit sectors]
+Flags: "civilian_presence" (5)
+
+Phase 3:
+Action: "deliver" (21)
+Target: "supplies" (55)
+When: [time 3], "before"
+Where: "charlie sector" (2)
+Flags: "stealth" (1)
+```
+
+### Network Infrastructure Attack
+Natural: "Breach firewall, plant backdoor, maintain persistent access, avoid detection"
+```
+Phase 1:
+Action: "breach" (5)
+Target: "firewall" (25)
+When: [time 1], "exact"
+Where: [sector]
+Flags: "electronic_silence" (6)
+
+Phase 2:
+Action: "hack" (37)
+Target: "system" (56)
+When: [time 2], "after"
+Where: [sector]
+Flags: "stealth" (1)
+
+Phase 3:
+Action: "maintain" (43)
+Target: "access point" (0)
+When: [continuous], "after"
+Where: [sector]
+Flags: "stealth" (1)
+```
+
+## Emergency Response Patterns
+
+### Cascading Evacuation
+Natural: "Chemical leak detected! Evacuate civilians, secure perimeter, contain hazard"
+```
+Priority 1:
+Action: "evacuate" (30)
+Target: "civilian" (13)
+When: [immediate], "exact"
+Where: [sector]
+Flags: "critical" (3)
+
+Priority 2:
+Action: "secure" (58)
+Target: "perimeter" (42)
+When: [immediate], "after"
+Where: [sector]
+Flags: "high_risk" (2)
+
+Priority 3:
+Action: "contain" (15)
+Target: "zone" (62)
+When: [after secure], "after"
+Where: [sector]
+Flags: "high_risk" (2)
+```
+
+### Communication Blackout Response
+Natural: "Lost contact with base! Activate emergency beacon, maintain radio silence, proceed to rally point"
+```
+Phase 1:
+Action: "activate" (1)
+Target: "beacon" (7)
+When: [immediate], "exact"
+Where: [sector]
+Flags: "electronic_silence" (6)
+
+Phase 2:
+Action: "move" (46)
+Target: "personnel" (43)
+When: [after activation], "after"
+Where: [rally sector]
+Flags: "stealth" (1)
+```
+
+## Advanced Time Patterns
+
+### Time-Critical Sequences
+- "At dawn" → 05:00-06:00, "approximate"
+- "During shift change" → Known shift times, "exact"
+- "Between patrols" → Known patrol schedule gaps, "exact"
+- "After systems reboot" → Known maintenance schedule, "after"
+- "During communications window" → Known comms schedule, "exact"
+- "Before satellite pass" → Known orbital schedule, "before"
+
+### Environmental Timing
+- "After sandstorm passes" → Weather dependent, "after"
+- "Before fog lifts" → Weather dependent, "before"
+- "During peak traffic" → Civilian presence, "approximate"
+- "In darkness" → Night hours (21:00-04:00), "approximate"
+- "At minimum guard presence" → Known shift patterns, "exact"
+
+## Advanced Flag Usage
+
+### Compound Flag Implications
+- "high_risk" + "civilian_presence" → Extreme caution required
+- "stealth" + "electronic_silence" → Complete emissions control
+- "weather_dependent" + "critical" → Execute despite conditions
+- "abort_conditions" + "high_risk" → Zero tolerance for compromise
+
+### Context-Dependent Flag Selection
+- Urban Operations → "civilian_presence" default
+- Cyber Operations → "electronic_silence" default
+- Covert Operations → "stealth" default
+- Combat Operations → "high_risk" default
+- Time-Critical Operations → "critical" default
+
+## Common Time Expressions
+
+- "ASAP/now/immediately" → current time with "after" modifier
+- "around/about/approximately" → "approximate" modifier
+- "before sunrise" → 05:00, "before" modifier
+- "by midnight" → 00:00, "before" modifier
+- "after sunset" → 20:00, "after" modifier
+- "during the night" → night hours, "approximate" modifier
+
+## Common Flag Triggers
+
+Natural language that typically triggers specific flags:
+- "critical/urgent/emergency" → "critical" (3)
+- "quietly/stealthy/covert" → "stealth" (1)
+- "dangerous/risky" → "high_risk" (2)
+- "civilians present/populated" → "civilian_presence" (5)
+- "weather permitting" → "weather_dependent" (4)
+- "radio silence/emissions control" → "electronic_silence" (6)
+- "mission scrubbed/compromised" → "abort_conditions" (7) 

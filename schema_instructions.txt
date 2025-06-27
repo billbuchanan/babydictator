@@ -1,0 +1,61 @@
+# Encoding and Decoding Instructions for 30-bit Schema Integer
+
+---
+
+### Bit Layout (MSB → LSB):
+
+| Field  | Bits | Position (bit offset) | Description                      |
+|--------|-------|----------------------|---------------------------------|
+| action | 6     | 24 to 29             | Action code (0–63)              |
+| target | 6     | 18 to 23             | Target code (0–63)              |
+| when   | 13    | 5 to 17              | Composite: hour, minute, modifier |
+| where  | 4     | 1 to 4               | Location code (0–15)            |
+| flags  | 1     | 0                    | Flags bit (0 or 1)              |
+
+---
+
+### Encoding Procedure (to integer):
+
+```python
+def encode_schema(action, target, hour, minute, modifier, where, flags):
+    # Validate inputs within allowed ranges before encoding
+    when = (hour << 8) | (minute << 2) | modifier
+    encoded = (action << 24) | (target << 18) | (when << 5) | (where << 1) | flags
+    return encoded
+Decoding Procedure (from integer):
+python
+Copy
+def decode_schema(encoded):
+    flags = encoded & 0b1
+    where = (encoded >> 1) & 0b1111           # 4 bits
+    when = (encoded >> 5) & 0b1111111111111   # 13 bits
+    target = (encoded >> 18) & 0b111111       # 6 bits
+    action = (encoded >> 24) & 0b111111       # 6 bits
+
+    modifier = when & 0b11                     # 2 bits
+    minute = (when >> 2) & 0b111111            # 6 bits
+    hour = (when >> 8) & 0b11111               # 5 bits
+
+    return {
+        "action": action,
+        "target": target,
+        "hour": hour,
+        "minute": minute,
+        "modifier": modifier,
+        "where": where,
+        "flags": flags
+    }
+Notes:
+Total bits = 30, packed into an unsigned 32-bit integer (2 highest bits unused).
+
+Bit order is big-endian (MSB is action, LSB is flags).
+
+No padding needed.
+
+when field composed as:
+
+hour (5 bits, values 0–23)
+
+minute (6 bits, values 0–59)
+
+modifier (2 bits, e.g., exact, before, after, approximate)
